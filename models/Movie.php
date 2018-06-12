@@ -1,12 +1,16 @@
 <?php
-    class Film {
+    class Movie {
         private $conn;
-        private $table = 'film';
+        private $table = 'movie';
 
-        public $film_id;
+        public $movie_id;
         public $title;
-        public $description;
+        public $image;
+        public $summary;
+        public $genre;
         public $release_year;
+        public $rating;
+        
 
         public function __construct($db) {
             $this->conn = $db;
@@ -14,12 +18,15 @@
 
         public function read() {
             $query = 'SELECT
-                film_id,
+                movie_id,
                 title,
-                description,
-                release_year
+                image,
+                summary,
+                genre,
+                release_year,
+                rating
                 FROM
-                ' . $this->table . ' film
+                ' . $this->table . ' movie
                 ORDER BY
                 title';   
 

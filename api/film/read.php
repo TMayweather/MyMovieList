@@ -4,37 +4,41 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/Database.php';
-include_once '../../models/Film.php';
+include_once '../../models/Movie.php';
 
 $database = new Database();
 $db = $database->connect();
 
-$film = new Film($db);
+$movie = new Movie($db);
 
-$result = $film->read();
+$result = $movie->read();
 
 $num = $result->rowCount();
 
 if($num > 0) {
-    $films_arr = array();
-    $films_arr['data'] = array();
+    $movies_arr = array();
+    $movies_arr['data'] = array();
 
     while($row = $result->fetch(PDO:: FETCH_ASSOC)) {
         extract($row);
 
-        $film_item = array (
-            'id' => $film_id,
+        $movie_item = array (
+            'id' => $movie_id,
             'title' => $title,
-            'description' => html_entity_decode($description),
-            'release_year' => $release_year
+            'image' => $image,
+            'summary' => html_entity_decode($summary),
+            'genre' => $genre,
+            'release_year' => $release_year,
+            'rating' => $rating
+
         );
 
-        array_push($films_arr['data'], $film_item);
+        array_push($movies_arr['data'], $movie_item);
     }
 
-    echo json_encode($films_arr);
+    echo json_encode($movies_arr);
 } else {
     echo json_encode(
-        array('message' => 'No Films Found')
+        array('message' => 'No Movies Found')
     );
 }
