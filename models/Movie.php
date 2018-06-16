@@ -67,11 +67,19 @@
             }
 
             public function create($title, $image, $summary, $genre, $release_year, $rating) {
+                if(isset($_POST['submit'])){
+                    $title = pg_escape_string($_POST['title']);
+                    $image = pg_escape_string($_POST['image']);
+                    $summary = pg_escape_string($_POST['summary']);
+                    $genre = pg_escape_string($_POST['genre']);
+                    $release_year = pg_escape_string($_POST['release_year']);
+                    $rating = pg_escape_string($_POST['rating']);
+                }
             $query = 'INSERT INTO ' . 
                 $this->table . '
                 (title,image,summary,genre,release_year,rating)
               VALUES
-              (:title,:image,:summary,:genre,:release_year,:rating)';
+              ('.$title.', '.$image.','.$summary.','.$genre.','.$release_year.','.$rating.')';
               
 
                 $stmt = $this->conn->prepare($query);

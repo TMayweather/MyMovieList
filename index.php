@@ -12,56 +12,26 @@ include ('./config/Database.php');
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-    <title>MY Movie List</title>
-    
-    <script>
-    //TESTING FRONT END THINGS
-var movies = '';
-$.ajax({
-    type: "GET",
-    url: 'api/film/read.php',
-    success: function(data){
-     useData(data);  
-    }
-});
-
-const useData = (data) => {
-movies = data.data;
-console.log(movies);
-
-movies.forEach((movie) => {
-const movieItem = document.createElement('li')
-movieItem.textContent = movie.title
-document.querySelector('#list').appendChild(movieItem)
-})
-}
-
-    </script>
+ <script type="text/javascript" src="./js/read.js"></script>
+    <title>My Movie List</title>
 </head>
 <body>
    <h1>Welcome to my movie list</h1> 
 
    <div id="list">
-        <!-- <?php
-        
-        $pg = "SELECT * FROM movie LIMIT 3";
-        $result = pg_query($conn, $pg);
-        if (pg_num_rows($result) > 0) {
-            while ($row = pg_fetch_assoc($result)) {
-                echo "<p>";
-                echo $row['title'];
-                $image = $row['image'];
-                echo '<img src="'.$image.'" >';
-                echo "<br>";
-                echo $row['summary'];
-                echo "<br>";
-                echo $row['genre'];
-                echo "</p>";
-            }
-        } else {
-            echo "There are no movies!";
-        }
-        ?> -->
    </div>
+
+   <form action="./create.php" method="POST">
+   <div>
+   <label for="title">Title</label>
+    <input type="text" name="title" id="title" placeholder="title" value="">
+   </div>
+    <div>
+   <label for="image">Image</label>
+    <input type="text" name="image" id="image" placeholder="http://" value="">
+   </div>
+   <textarea type="text" name="summary" id="summary" rows="10" cols="50" value="">Movie summary goes here</textarea>
+   <button type="submit">Add</button>
+   </form>
 </body>
 </html>
